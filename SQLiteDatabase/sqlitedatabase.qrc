@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sqlitedatabase">
+        <file>images/Sqlite-square-icon.svg</file>
+    </qresource>
+</RCC>
