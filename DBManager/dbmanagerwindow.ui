@@ -58,10 +58,14 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionAddConnection"/>
+   <addaction name="actionPreferences"/>
    <addaction name="actionRemoveConnection"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddConnection">
+   <property name="icon">
+    <iconset theme="document-new"/>
+   </property>
    <property name="text">
     <string>Add Connection</string>
    </property>
@@ -70,11 +74,25 @@
    </property>
   </action>
   <action name="actionRemoveConnection">
+   <property name="icon">
+    <iconset theme="edit-delete"/>
+   </property>
    <property name="text">
     <string>Remove connection</string>
    </property>
    <property name="toolTip">
     <string>Remove connection to database</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="icon">
+    <iconset theme="preferences-system"/>
+   </property>
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="toolTip">
+    <string>Database preferences</string>
    </property>
   </action>
  </widget>
