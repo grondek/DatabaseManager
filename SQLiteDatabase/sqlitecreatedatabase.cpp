@@ -30,6 +30,19 @@ SQLITECreateDatabase::~SQLITECreateDatabase()
 void SQLITECreateDatabase::create()
 {
     qDebug() << "CREATE DATABASE!";
+
+    DBObject *obj = new DBObject;
+    obj->setProperty( dbmanager::NAME_PROPERTY, ui->leName->text() );
+    obj->setProperty( dbmanager::PARENT_PROPERTY, QVariant() );
+    obj->setProperty( "filename", ui->leDBFileName->text() );
+    obj->setProperty( "create_if_not_exists", ui->cbCreateMode->isChecked() );
+    obj->setProperty( "rw_mode",
+                      ui->rbRWMode->isChecked()
+                      ? QString( "rw" )
+                      : QString( "ro" )
+                        );
+
+    emit created( obj );
 }
 
 void SQLITECreateDatabase::on_tbSelectFile_clicked()

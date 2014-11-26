@@ -11,6 +11,9 @@ const QString APPLICATION_NAME( "DatabaseManager" );
 
 const QString OBJECT_TYPE_DATABASE( "database" );
 
+const char NAME_PROPERTY[] = "name";
+const char PARENT_PROPERTY[] = "parentObject";
+
 } // namespace dbmanager
 
 #endif // DBDEFAULTS_H

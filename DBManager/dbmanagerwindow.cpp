@@ -128,6 +128,9 @@ void DBManagerWindow::create(QAction *action)
              dlg, SLOT(accept() ) );
     connect( bbox, SIGNAL(rejected() ),
              dlg, SLOT(reject() ) );
+    connect( widget, SIGNAL(created(DBObject*) ),
+             _pd->dbmodel, SLOT(addObject(DBObject*) )
+             );
 
     dlg->show();
 }
