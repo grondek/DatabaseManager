@@ -3,6 +3,7 @@
 class DBObjectPrivate
 {
 public:
+    quint32 uid;
     QString name;
     QString parent;
 };
@@ -16,6 +17,16 @@ DBObject::DBObject(QObject *parent) :
 DBObject::~DBObject()
 {
     delete _pd;
+}
+
+quint32 DBObject::uid() const
+{
+    return _pd->uid;
+}
+
+void DBObject::setUid(quint32 uid)
+{
+    _pd->uid = uid;
 }
 
 QString DBObject::name() const
