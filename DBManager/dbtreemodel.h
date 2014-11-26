@@ -8,11 +8,6 @@ class DBTreeModel : public QStandardItemModel
     Q_OBJECT
 public:
     explicit DBTreeModel(QObject *parent = 0);
-    
-signals:
-    
-public slots:
-    
 };
 
 #endif // DBTREEMODEL_H
