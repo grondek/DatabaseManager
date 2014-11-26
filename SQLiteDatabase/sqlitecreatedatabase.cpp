@@ -2,6 +2,7 @@
 #include "ui_sqlitecreatedatabase.h"
 #include "dbdefaults.h"
 #include "sqlitedbdefaults.h"
+#include "sqlitedbobject.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -31,7 +32,7 @@ void SQLITECreateDatabase::create()
 {
     qDebug() << "CREATE DATABASE!";
 
-    DBObject *obj = new DBObject;
+    SQLITEDBObject *obj = new SQLITEDBObject;
     obj->setProperty( dbmanager::NAME_PROPERTY, ui->leName->text() );
     obj->setProperty( dbmanager::PARENT_PROPERTY, QVariant() );
     obj->setProperty( "filename", ui->leDBFileName->text() );

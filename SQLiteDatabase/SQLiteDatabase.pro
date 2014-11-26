@@ -18,12 +18,14 @@ INCLUDEPATH += ../DBInterface
 LIBS += -L$$PWD/../bin -lDBInterface
 
 SOURCES += sqlitedatabase.cpp \
-    sqlitecreatedatabase.cpp
+    sqlitecreatedatabase.cpp \
+    sqlitedbobject.cpp
 
 HEADERS += sqlitedatabase.h\
         SQLiteDatabase_global.h \
     sqlitecreatedatabase.h \
-    sqlitedbdefaults.h
+    sqlitedbdefaults.h \
+    sqlitedbobject.h
 
 OTHER_FILES += \
     sqlitedatabase.json
