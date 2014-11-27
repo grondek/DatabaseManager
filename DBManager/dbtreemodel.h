@@ -37,6 +37,7 @@ private:
 
     int row( DBObject *obj ) const;
     DBObject *object( int row, DBObject *pobj ) const;
+    QVariant data(DBObject *obj, int role = Qt::DisplayRole) const;
 };
 
 #endif // DBTREEMODEL_H

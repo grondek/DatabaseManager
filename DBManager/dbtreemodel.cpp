@@ -177,25 +177,37 @@ QModelIndex DBTreeModel::indexByName(const QString &objname)
 
 QVariant DBTreeModel::data(const QModelIndex &index, int role) const
 {
-    if ( role == Qt::DisplayRole || role == Qt::EditRole ) {
-        if ( index.data( DBObjectRole ).canConvert< DBObject* >() ) {
-            DBObject *obj = index.data( DBObjectRole ).value< DBObject* >();
+    quint32 uid = quint32( index.internalId() );
+    foreach ( DBObject *obj, _pd->root_objects ) {
+        if ( obj->uid() == uid )
+            return data( obj, role );
 
-            return obj->property( "name" );
-        }
-    }
-
-    if ( role == DBObjectRole ) {
-        if ( !index.parent().isValid() )
-            return QVariant::fromValue< DBObject* >(
-                        _pd->root_objects.value( index.row(), NULL )
-                        );
-
-        return QVariant();
+        foreach ( DBObject *child, obj->findChildren< DBObject* >() )
+            if ( child->uid() == uid )
+                return data( child, role );
     }
 
     return QVariant();
 }
+
+
+QVariant DBTreeModel::data(DBObject *obj, int role) const
+{
+    if ( role == Qt::DisplayRole || role == Qt::EditRole ) {
+        return obj->name();
+    }
+
+    if ( role == DBObjectRole ) {
+        return QVariant::fromValue< DBObject* >( obj );
+    }
+
+    if ( role == Qt::DecorationRole ) {
+        return obj->icon();
+    }
+
+    return QVariant();
+}
+
 
 void DBTreeModel::addObject(DBObject *obj)
 {

@@ -6,6 +6,7 @@ public:
     quint32 uid;
     QString name;
     QString parent;
+    QIcon icon;
 };
 
 DBObject::DBObject(QObject *parent) :
@@ -47,4 +48,14 @@ QString DBObject::parentObject() const
 void DBObject::setParentObject(const QString &pid)
 {
     _pd->parent = pid;
+}
+
+QIcon DBObject::icon() const
+{
+    return _pd->icon;
+}
+
+void DBObject::setIcon(const QIcon &icon)
+{
+    _pd->icon = icon;
 }

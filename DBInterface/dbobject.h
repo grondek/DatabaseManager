@@ -2,6 +2,7 @@
 #define DBOBJECT_H
 
 #include <QObject>
+#include <QIcon>
 
 class DBObjectPrivate;
 
@@ -12,6 +13,7 @@ class DBObject: public QObject
     Q_PROPERTY( quint32 uid READ uid WRITE setUid USER true )
     Q_PROPERTY( QString name READ name WRITE setName USER true )
     Q_PROPERTY( QString parentObject READ parentObject WRITE setParentObject USER true )
+    Q_PROPERTY( QIcon icon READ icon WRITE setIcon USER true )
 
 private:
     DBObjectPrivate *_pd;
@@ -27,6 +29,9 @@ public:
 
     QString parentObject() const;
     void setParentObject( const QString &pid );
+
+    QIcon icon() const;
+    void setIcon( const QIcon &icon );
 };
 
 #endif // DBOBJECT_H
