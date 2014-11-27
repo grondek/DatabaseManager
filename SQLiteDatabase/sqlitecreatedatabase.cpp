@@ -53,28 +53,31 @@ void SQLITECreateDatabase::on_tbSelectFile_clicked()
                 dbmanager::APPLICATION_NAME
                 );
 
-    QString filename = QFileDialog::getOpenFileName(
-                this,
-                tr( "Open database file" ),
-                settings.value(
-                    QString( "%1/%2" )
-                    .arg( sqlitedb::SETTINGS_PREFIX )
-                    .arg( sqlitedb::SETTINGS_LAST_OPEN_DIR ),
-                    QDir::homePath() ).toString()
-                );
+    QFileDialog dlg( this,
+                     tr( "Open database file" ),
+                     settings.value(
+                         QString( "%1/%2" )
+                         .arg( sqlitedb::SETTINGS_PREFIX )
+                         .arg( sqlitedb::SETTINGS_LAST_OPEN_DIR ),
+                         QDir::homePath() ).toString()
+                     );
+    dlg.setAcceptMode( QFileDialog::AcceptOpen );
 
-    if ( filename.isEmpty() )
+    if ( dlg.exec() != QDialog::Accepted )
+        return;
+
+    if ( dlg.selectedFiles().isEmpty() )
         return;
 
     settings.setValue(
                 QString( "%1/%2" )
                 .arg( sqlitedb::SETTINGS_PREFIX )
                 .arg( sqlitedb::SETTINGS_LAST_OPEN_DIR ),
-                QFileInfo( filename ).absolutePath()
+                dlg.directory().absolutePath()
                 );
 
     ui->leDBFileName->setText(
-                QDir::toNativeSeparators( filename ) );
+                QDir::toNativeSeparators( dlg.selectedFiles().first() ) );
 }
 
 void SQLITECreateDatabase::readModeChanged()
