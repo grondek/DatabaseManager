@@ -27,6 +27,8 @@ typedef struct _DB_OBJECT_TYPE_INFO {
 class DBINTERFACESHARED_EXPORT DBInterface: public QObject
 {
     Q_OBJECT
+signals:
+    void newObject( DBObject *obj );
 public:
     /**
      * @brief Default constructor
@@ -80,7 +82,7 @@ public:
      * @param parent parent object identifier
      * @return
      */
-    virtual DBObject *createObject( const QString &type, const QVariantMap &parameters, const QString &parent ) = 0;
+    virtual DBObject *createObject( const QString &type, const QString &parent, const QVariantMap &parameters ) = 0;
 
     /**
      * @brief Create object editor for new object

@@ -56,6 +56,9 @@ bool DBPluginLoader::loadAll()
                     loader->metaData().toVariantMap().value( "IID" ).toString(),
                     loader
                     );
+
+        connect( loader->instance(), SIGNAL(newObject(DBObject*) ),
+                 this, SIGNAL(newObject(DBObject*) ) );
     }
 
     return true;

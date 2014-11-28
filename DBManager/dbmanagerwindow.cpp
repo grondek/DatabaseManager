@@ -24,14 +24,17 @@ public:
 
     DBManagerWindowPrivate( DBManagerWindow *parent )
     {
-        loader = new DBPluginLoader( parent );
-        /*QStringList plugins = */loader->availablePlugins();
-        loader->loadAll();
-
         dbmodel = new DBTreeModel( parent );
         dbproxy = new QSortFilterProxyModel( parent );
         dbproxy->setSourceModel( dbmodel );
 
+        loader = new DBPluginLoader( parent );
+        loader->connect( loader, SIGNAL(newObject(DBObject*) ),
+                         dbmodel, SLOT(addObject(DBObject*) )
+                         );
+
+        /*QStringList plugins = */loader->availablePlugins();
+        loader->loadAll();
     }
 
     ~DBManagerWindowPrivate()
@@ -128,9 +131,6 @@ void DBManagerWindow::create(QAction *action)
              dlg, SLOT(accept() ) );
     connect( bbox, SIGNAL(rejected() ),
              dlg, SLOT(reject() ) );
-    connect( widget, SIGNAL(created(DBObject*) ),
-             _pd->dbmodel, SLOT(addObject(DBObject*) )
-             );
 
     dlg->show();
 }

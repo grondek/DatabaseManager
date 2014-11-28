@@ -2,7 +2,7 @@
 #include "ui_sqlitecreatedatabase.h"
 #include "dbdefaults.h"
 #include "sqlitedbdefaults.h"
-#include "sqlitedbobject.h"
+//#include "sqlitedbobject.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -30,20 +30,22 @@ SQLITECreateDatabase::~SQLITECreateDatabase()
 
 void SQLITECreateDatabase::create()
 {
-    qDebug() << "CREATE DATABASE!";
-
-    SQLITEDBObject *obj = new SQLITEDBObject;
-    obj->setProperty( dbmanager::NAME_PROPERTY, ui->leName->text() );
-    obj->setProperty( dbmanager::PARENT_PROPERTY, QVariant() );
-    obj->setProperty( "filename", ui->leDBFileName->text() );
-    obj->setProperty( "create_if_not_exists", ui->cbCreateMode->isChecked() );
-    obj->setProperty( "rw_mode",
+    QVariantMap params;
+    params.insert( dbmanager::NAME_PROPERTY, ui->leName->text() );
+    params.insert( dbmanager::PARENT_PROPERTY, QVariant() );
+    params.insert( "filename", ui->leDBFileName->text() );
+    params.insert( "create_if_not_exists", ui->cbCreateMode->isChecked() );
+    params.insert( "rw_mode",
                       ui->rbRWMode->isChecked()
                       ? QString( "rw" )
                       : QString( "ro" )
                         );
 
-    emit created( obj );
+    emit createObject(
+                dbmanager::OBJECT_TYPE_DATABASE,
+                QString::null,
+                params
+                );
 }
 
 void SQLITECreateDatabase::on_tbSelectFile_clicked()

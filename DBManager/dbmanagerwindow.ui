@@ -22,16 +22,16 @@
       </property>
       <widget class="QTreeView" name="dbTreeView">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>1</horstretch>
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
       </widget>
       <widget class="QWidget" name="widget" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>3</horstretch>
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+         <horstretch>6</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -64,7 +64,9 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddConnection">
    <property name="icon">
-    <iconset theme="document-new"/>
+    <iconset theme="document-new">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Add Connection</string>
@@ -75,7 +77,9 @@
   </action>
   <action name="actionRemoveConnection">
    <property name="icon">
-    <iconset theme="edit-delete"/>
+    <iconset theme="edit-delete">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Remove connection</string>
@@ -86,7 +90,9 @@
   </action>
   <action name="actionPreferences">
    <property name="icon">
-    <iconset theme="preferences-system"/>
+    <iconset theme="preferences-system">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Preferences</string>

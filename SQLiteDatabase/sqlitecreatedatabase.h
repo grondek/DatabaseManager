@@ -2,6 +2,7 @@
 #define SQLITECREATEDATABASE_H
 
 #include <QWidget>
+#include <QVariantMap>
 #include "dbobject.h"
 
 namespace Ui {
@@ -14,7 +15,12 @@ class SQLITECreateDatabase : public QWidget
 private:
     Ui::SQLITECreateDatabase *ui;
 signals:
-    void created( DBObject *obj );
+    void createObject(
+            const QString &type,
+            const QString &parent,
+            const QVariantMap &params
+            );
+//    void created( DBObject *obj );
 public:
     explicit SQLITECreateDatabase(QWidget *parent = 0);
     ~SQLITECreateDatabase();

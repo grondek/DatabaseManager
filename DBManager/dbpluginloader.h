@@ -20,6 +20,8 @@ class DBPluginLoader : public QObject
     Q_OBJECT
 private:
     QHash< QString, QPointer< QPluginLoader > > m_plugins; ///<! Database plugins
+signals:
+    void newObject( DBObject *obj );
 public:
     /**
      * @brief Constructor

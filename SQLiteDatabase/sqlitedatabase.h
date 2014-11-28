@@ -56,7 +56,7 @@ public:
      * @param parent parent object identifier
      * @return
      */
-    virtual DBObject *createObject( const QString &type, const QVariantMap &parameters, const QString &parent );
+    virtual DBObject *createObject( const QString &type, const QString &parent, const QVariantMap &parameters);
 
     /**
      * @brief Create object editor for new object
@@ -71,6 +71,12 @@ public:
      * @return
      */
     virtual QWidget *createObjectEditor( DBObject *obj );
+private slots:
+    void slotCreateObject(
+            const QString &type,
+            const QString &parent,
+            const QVariantMap &params
+            );
 };
 
 #endif // SQLITEDATABASE_H
