@@ -59,3 +59,13 @@ void DBObject::setIcon(const QIcon &icon)
 {
     _pd->icon = icon;
 }
+
+int DBObject::childCount() const
+{
+    return 0;
+}
+
+QList<QAction *> DBObject::actions() const
+{
+    return QList<QAction *>();
+}

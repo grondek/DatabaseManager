@@ -98,12 +98,14 @@ int DBTreeModel::rowCount(const QModelIndex &parent) const
     if ( !obj )
         return 0;
 
-    int rows = 0;
-    foreach ( QObject *child, obj->children() )
-        if ( qobject_cast< DBObject* >( child ) )
-            rows++;
+    return obj->childCount();
 
-    return rows;
+//    int rows = 0;
+//    foreach ( QObject *child, obj->children() )
+//        if ( qobject_cast< DBObject* >( child ) )
+//            rows++;
+
+//    return rows;
 }
 
 QModelIndex DBTreeModel::index(int row, int column, const QModelIndex &parent) const

@@ -20,6 +20,8 @@ public:
     ~DBManagerWindow();
 private slots:
     void create( QAction *action );
+    void on_dbTreeView_customContextMenuRequested(const QPoint &pos);
+
 private:
     void initAddMenu();
 };

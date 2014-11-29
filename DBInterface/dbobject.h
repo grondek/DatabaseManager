@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QIcon>
+#include <QAction>
 
 class DBObjectPrivate;
 
@@ -32,6 +33,9 @@ public:
 
     QIcon icon() const;
     void setIcon( const QIcon &icon );
+
+    virtual int childCount() const;
+    virtual QList< QAction *> actions() const;
 };
 
 #endif // DBOBJECT_H

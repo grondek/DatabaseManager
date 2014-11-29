@@ -134,3 +134,20 @@ void DBManagerWindow::create(QAction *action)
 
     dlg->show();
 }
+
+void DBManagerWindow::on_dbTreeView_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = ui->dbTreeView->indexAt( pos );
+
+    DBObject *obj = _pd->dbmodel->data(
+                _pd->dbproxy->mapToSource( index ),
+                DBTreeModel::DBObjectRole
+                ).value< DBObject* >();
+
+    if ( !obj || obj->actions().isEmpty() )
+        return;
+
+    QMenu *menu = new QMenu( this );
+    menu->insertActions( NULL, obj->actions() );
+    menu->popup( ui->dbTreeView->viewport()->mapToGlobal( pos ) );
+}
