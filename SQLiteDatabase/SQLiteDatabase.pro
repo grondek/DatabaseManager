@@ -16,6 +16,7 @@ DESTDIR = $$PWD/../bin/plugins
 INCLUDEPATH += ../DBInterface
 
 LIBS += -L$$PWD/../bin -lDBInterface
+LIBS += -lsqlite3
 
 SOURCES += sqlitedatabase.cpp \
     sqlitecreatedatabase.cpp \

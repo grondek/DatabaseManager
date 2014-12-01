@@ -3,15 +3,13 @@
 
 #include "dbobject.h"
 
-class QAction;
+class SQLITEDBObjectPrivate;
 
 class SQLITEDBObject : public DBObject
 {
     Q_OBJECT
 private:
-    QAction *m_action_connect;
-    QAction *m_action_separator;
-    QAction *m_action_remove;
+    SQLITEDBObjectPrivate *_pd;
 public:
     explicit SQLITEDBObject( QObject *parent = NULL );
     virtual ~SQLITEDBObject();
