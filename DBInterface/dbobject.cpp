@@ -5,14 +5,32 @@ class DBObjectPrivate
 public:
     quint32 uid;
     QString name;
-    QString parent;
+    quint32 parent;
     QIcon icon;
+
+    static quint32 _nextuid;
+
+    static quint32 nextuid()
+    {
+        return ++_nextuid;
+    }
 };
+
+quint32 DBObjectPrivate::_nextuid = 0;
 
 DBObject::DBObject(QObject *parent) :
     QObject(parent)
 {
     _pd = new DBObjectPrivate;
+    _pd->uid = DBObjectPrivate::nextuid();
+}
+
+DBObject::DBObject( quint32 uid, quint32 parentuid, QObject *parent ) :
+    QObject(parent)
+{
+    _pd = new DBObjectPrivate;
+    _pd->uid = uid;
+    _pd->parent = parentuid;
 }
 
 DBObject::~DBObject()
@@ -40,12 +58,12 @@ void DBObject::setName(const QString &name)
     _pd->name = name;
 }
 
-QString DBObject::parentObject() const
+quint32 DBObject::parentObject() const
 {
     return _pd->parent;
 }
 
-void DBObject::setParentObject(const QString &pid)
+void DBObject::setParentObject( quint32 pid )
 {
     _pd->parent = pid;
 }

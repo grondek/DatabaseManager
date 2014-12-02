@@ -19,8 +19,6 @@ public:
     }
 };
 
-static int s_object_uid = 1;
-
 DBTreeModel::DBTreeModel(QObject *parent) :
     QAbstractItemModel(parent)
 {
@@ -99,13 +97,6 @@ int DBTreeModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     return obj->childCount();
-
-//    int rows = 0;
-//    foreach ( QObject *child, obj->children() )
-//        if ( qobject_cast< DBObject* >( child ) )
-//            rows++;
-
-//    return rows;
 }
 
 QModelIndex DBTreeModel::index(int row, int column, const QModelIndex &parent) const
@@ -169,10 +160,24 @@ QModelIndex DBTreeModel::parent(const QModelIndex &index) const
     return QModelIndex();
 }
 
-QModelIndex DBTreeModel::indexByName(const QString &objname)
+QModelIndex DBTreeModel::indexByUid( quint32 uid )
 {
-    if ( objname.isEmpty() )
+    if ( !uid )
         return QModelIndex();
+
+    foreach ( DBObject *obj, _pd->root_objects ) {
+        if ( obj->uid() == uid )
+            return createIndex( row( obj ), 0, obj->uid() );
+
+        foreach ( DBObject *child, obj->findChildren< DBObject* >() )
+            if ( child->uid() == uid )
+                return createIndex(
+                            row( qobject_cast< DBObject* >( child ) ),
+                            0,
+                            child->property( "uid" ).toUInt()
+                            );
+
+    }
 
     return QModelIndex();
 }
@@ -213,9 +218,9 @@ QVariant DBTreeModel::data(DBObject *obj, int role) const
 
 void DBTreeModel::addObject(DBObject *obj)
 {
-    QModelIndex pindex = indexByName( obj->parentObject() );
+    QModelIndex pindex = indexByUid( obj->parentObject() );
 
-    obj->setUid( s_object_uid++ );
+    qDebug() << "add" << obj->parentObject() << pindex;
 
     int row = rowCount( pindex );
 

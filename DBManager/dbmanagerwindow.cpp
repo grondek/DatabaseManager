@@ -116,7 +116,7 @@ void DBManagerWindow::create(QAction *action)
 
     QWidget *widget = dbi->createObjectEditor(
                 action->data().toMap().value( "objecttype" ).toString(),
-                QString(),
+                0,
                 dlg
                 );
     dlg->layout()->addWidget( widget );

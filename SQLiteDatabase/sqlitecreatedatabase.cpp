@@ -32,7 +32,7 @@ void SQLITECreateDatabase::create()
 {
     QVariantMap params;
     params.insert( dbmanager::NAME_PROPERTY, ui->leName->text() );
-    params.insert( dbmanager::PARENT_PROPERTY, QVariant() );
+    params.insert( dbmanager::PARENT_PROPERTY, 0 );
     params.insert( "filename", ui->leDBFileName->text() );
     params.insert( "create_if_not_exists", ui->cbCreateMode->isChecked() );
     params.insert( "rw_mode",
@@ -43,7 +43,7 @@ void SQLITECreateDatabase::create()
 
     emit createObject(
                 dbmanager::OBJECT_TYPE_DATABASE,
-                QString::null,
+                0,
                 params
                 );
 }

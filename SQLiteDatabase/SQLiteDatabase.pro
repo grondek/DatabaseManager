@@ -20,13 +20,15 @@ LIBS += -lsqlite3
 
 SOURCES += sqlitedatabase.cpp \
     sqlitecreatedatabase.cpp \
-    sqlitedbobject.cpp
+    sqlitedbobject.cpp \
+    sqlitegroupobject.cpp
 
 HEADERS += sqlitedatabase.h\
         SQLiteDatabase_global.h \
     sqlitecreatedatabase.h \
     sqlitedbdefaults.h \
-    sqlitedbobject.h
+    sqlitedbobject.h \
+    sqlitegroupobject.h
 
 OTHER_FILES += \
     sqlitedatabase.json

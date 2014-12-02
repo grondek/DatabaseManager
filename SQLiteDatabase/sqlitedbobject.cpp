@@ -1,4 +1,6 @@
 #include "sqlitedbobject.h"
+#include "dbdefaults.h"
+#include "sqlitedbdefaults.h"
 
 #include <QAction>
 
@@ -112,7 +114,23 @@ void SQLITEDBObject::connectToDB()
 
     if ( _pd->open( property( "filename" ).toByteArray(), flags ) != SQLITE_OK ) {
         //TODO show error message
+        return;
     }
+
+    QVariantMap params;
+    params.insert( dbmanager::NAME_PROPERTY, tr( "Tables" ) );
+    params.insert( dbmanager::PARENT_PROPERTY, uid() );
+    emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES, uid(), params );
+
+    /*
+SELECT
+  name, type
+FROM
+  sqlite_master
+WHERE
+  type in ('table', 'view')
+  */
+
 }
 
 void SQLITEDBObject::remove()

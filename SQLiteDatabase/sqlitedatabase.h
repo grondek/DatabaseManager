@@ -56,7 +56,7 @@ public:
      * @param parent parent object identifier
      * @return
      */
-    virtual DBObject *createObject( const QString &type, const QString &parent, const QVariantMap &parameters);
+    virtual DBObject *createObject( const QString &type, quint32 parent, const QVariantMap &parameters);
 
     /**
      * @brief Create object editor for new object
@@ -64,7 +64,7 @@ public:
      * @param parent parent object identifier
      * @return
      */
-    virtual QWidget *createObjectEditor( const QString &type, const QString &parent, QWidget *parentWidget );
+    virtual QWidget *createObjectEditor( const QString &type, quint32 parent, QWidget *parentWidget );
     /**
      * @brief Create object editor for existing object
      * @param obj editing object
@@ -72,9 +72,8 @@ public:
      */
     virtual QWidget *createObjectEditor( DBObject *obj );
 private slots:
-    void slotCreateObject(
-            const QString &type,
-            const QString &parent,
+    void slotCreateObject(const QString &type,
+            quint32 parent,
             const QVariantMap &params
             );
 };

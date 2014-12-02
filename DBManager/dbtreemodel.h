@@ -2,6 +2,7 @@
 #define DBTREEMODEL_H
 
 #include <QAbstractItemModel>
+#include <QModelIndex>
 
 class DBObject;
 class DBTreeModelPrivate;
@@ -33,7 +34,7 @@ public slots:
     void addObject( DBObject *obj );
 
 private:
-    QModelIndex indexByName( const QString &objname );
+    QModelIndex indexByUid( quint32 uid );
 
     int row( DBObject *obj ) const;
     DBObject *object( int row, DBObject *pobj ) const;

@@ -1,7 +1,9 @@
 #include "sqlitedatabase.h"
 #include "sqlitecreatedatabase.h"
 #include "sqlitedbobject.h"
+#include "sqlitegroupobject.h"
 #include "dbdefaults.h"
+#include "sqlitedbdefaults.h"
 
 #include <QtDebug>
 
@@ -41,13 +43,32 @@ DB_OBJECT_TYPE_INFO SQLiteDatabase::objectTypeInfo(const QString &type) const
     return DB_OBJECT_TYPE_INFO();
 }
 
-DBObject *SQLiteDatabase::createObject(const QString &type, const QString &parent, const QVariantMap &parameters)
+DBObject *SQLiteDatabase::createObject(const QString &type, quint32 parent, const QVariantMap &parameters)
 {
     if ( type == dbmanager::OBJECT_TYPE_DATABASE ) {
         SQLITEDBObject *obj = new SQLITEDBObject;
+        obj->setParentObject( parent );
+
         QVariantMap::const_iterator it;
         for ( it = parameters.begin(); it != parameters.end(); ++it )
             obj->setProperty( it.key().toLocal8Bit(), it.value() );
+
+        connect( obj, SIGNAL(addChild(QString,quint32,QVariantMap) ),
+                 this, SLOT(slotCreateObject(QString,quint32,QVariantMap) ) );
+
+        return obj;
+    }
+
+    if ( type == sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES ) {
+        SQLITEGroupObject *obj = new SQLITEGroupObject;
+        obj->setParentObject( parent );
+
+        QVariantMap::const_iterator it;
+        for ( it = parameters.begin(); it != parameters.end(); ++it )
+            obj->setProperty( it.key().toLocal8Bit(), it.value() );
+
+        connect( obj, SIGNAL(addChild(QString,quint32,QVariantMap) ),
+                 this, SLOT(slotCreateObject(QString,quint32,QVariantMap) ) );
 
         return obj;
     }
@@ -55,12 +76,12 @@ DBObject *SQLiteDatabase::createObject(const QString &type, const QString &paren
     return NULL;
 }
 
-QWidget *SQLiteDatabase::createObjectEditor(const QString &type, const QString &parent, QWidget *parentWidget)
+QWidget *SQLiteDatabase::createObjectEditor(const QString &type, quint32 parent, QWidget *parentWidget)
 {
-    if ( type == "database" ) {
+    if ( type == dbmanager::OBJECT_TYPE_DATABASE  ) {
         SQLITECreateDatabase *creator = new SQLITECreateDatabase( parentWidget );
-        connect( creator, SIGNAL(createObject(QString,QString,QVariantMap) ),
-                 this, SLOT(slotCreateObject(QString,QString,QVariantMap) ) );
+        connect( creator, SIGNAL(createObject(QString,quint32,QVariantMap) ),
+                 this, SLOT(slotCreateObject(QString,quint32,QVariantMap) ) );
         return creator;
     }
 
@@ -72,9 +93,11 @@ QWidget *SQLiteDatabase::createObjectEditor(DBObject *obj)
     return new QWidget();
 }
 
-void SQLiteDatabase::slotCreateObject(const QString &type, const QString &parent, const QVariantMap &params)
+void SQLiteDatabase::slotCreateObject(const QString &type, quint32 parent, const QVariantMap &params)
 {
     DBObject *obj = createObject( type, parent, params );
-    if ( obj )
+    if ( obj ) {
+        qDebug() << "EMIT NEW OBJ" << obj->uid() << obj->parentObject();
         emit newObject( obj );
+    }
 }

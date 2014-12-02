@@ -13,13 +13,22 @@ class DBObject: public QObject
 
     Q_PROPERTY( quint32 uid READ uid WRITE setUid USER true )
     Q_PROPERTY( QString name READ name WRITE setName USER true )
-    Q_PROPERTY( QString parentObject READ parentObject WRITE setParentObject USER true )
+    Q_PROPERTY( quint32 parentObject READ parentObject WRITE setParentObject USER true )
     Q_PROPERTY( QIcon icon READ icon WRITE setIcon USER true )
 
 private:
     DBObjectPrivate *_pd;
+signals:
+    void childCountChanged( DBObject *thisobj );
+    void addChild(
+            const QString &type,
+            quint32 parent,
+            const QVariantMap &params
+            );
+    void removeChild( quint32 uid );
 public:
     explicit DBObject(QObject *parent = 0);
+    DBObject(quint32 uid, quint32 parentuid, QObject *parent = 0);
     virtual ~DBObject();
 
     quint32 uid() const;
@@ -28,8 +37,8 @@ public:
     QString name() const;
     void setName( const QString &name );
 
-    QString parentObject() const;
-    void setParentObject( const QString &pid );
+    quint32 parentObject() const;
+    void setParentObject( quint32 pid );
 
     QIcon icon() const;
     void setIcon( const QIcon &icon );

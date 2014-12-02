@@ -17,7 +17,7 @@ private:
 signals:
     void createObject(
             const QString &type,
-            const QString &parent,
+            quint32 parent,
             const QVariantMap &params
             );
 //    void created( DBObject *obj );
