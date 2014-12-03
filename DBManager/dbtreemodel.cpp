@@ -89,8 +89,9 @@ int DBTreeModel::columnCount(const QModelIndex &parent) const
 
 int DBTreeModel::rowCount(const QModelIndex &parent) const
 {
-    if ( !parent.isValid() )
+    if ( !parent.isValid() ) {
         return _pd->root_objects.count();
+    }
 
     DBObject *obj = parent.data( DBObjectRole ).value< DBObject* >();
     if ( !obj )
@@ -220,8 +221,6 @@ void DBTreeModel::addObject(DBObject *obj)
 {
     QModelIndex pindex = indexByUid( obj->parentObject() );
 
-    qDebug() << "add" << obj->parentObject() << pindex;
-
     int row = rowCount( pindex );
 
     beginInsertRows( pindex, row, row );
@@ -229,7 +228,7 @@ void DBTreeModel::addObject(DBObject *obj)
     if ( !pindex.isValid() ) {
         _pd->root_objects.append( obj );
     } else {
-        obj->setParent( pindex.data().value< DBObject* >() );
+        obj->setParent( pindex.data( DBObjectRole ).value< DBObject* >() );
     }
 
     endInsertRows();

@@ -73,6 +73,20 @@ DBObject *SQLiteDatabase::createObject(const QString &type, quint32 parent, cons
         return obj;
     }
 
+    if ( type == sqlitedb::OBJECT_TYPE_SQLITE_GROUP_VIEWS ) {
+        SQLITEGroupObject *obj = new SQLITEGroupObject;
+        obj->setParentObject( parent );
+
+        QVariantMap::const_iterator it;
+        for ( it = parameters.begin(); it != parameters.end(); ++it )
+            obj->setProperty( it.key().toLocal8Bit(), it.value() );
+
+        connect( obj, SIGNAL(addChild(QString,quint32,QVariantMap) ),
+                 this, SLOT(slotCreateObject(QString,quint32,QVariantMap) ) );
+
+        return obj;
+    }
+
     return NULL;
 }
 
@@ -97,7 +111,6 @@ void SQLiteDatabase::slotCreateObject(const QString &type, quint32 parent, const
 {
     DBObject *obj = createObject( type, parent, params );
     if ( obj ) {
-        qDebug() << "EMIT NEW OBJ" << obj->uid() << obj->parentObject();
         emit newObject( obj );
     }
 }

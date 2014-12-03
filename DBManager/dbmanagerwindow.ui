@@ -30,6 +30,9 @@
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
       </widget>
       <widget class="QWidget" name="widget" native="true">
        <property name="sizePolicy">
@@ -63,6 +66,7 @@
    <addaction name="actionAddConnection"/>
    <addaction name="actionPreferences"/>
    <addaction name="actionRemoveConnection"/>
+   <addaction name="actionExpandAll"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddConnection">
@@ -102,6 +106,11 @@
    </property>
    <property name="toolTip">
     <string>Database preferences</string>
+   </property>
+  </action>
+  <action name="actionExpandAll">
+   <property name="text">
+    <string>Expand all</string>
    </property>
   </action>
  </widget>

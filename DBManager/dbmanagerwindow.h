@@ -22,6 +22,8 @@ private slots:
     void create( QAction *action );
     void on_dbTreeView_customContextMenuRequested(const QPoint &pos);
 
+    void dbTreeSeelctionChanged();
+
 private:
     void initAddMenu();
 };

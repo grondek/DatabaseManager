@@ -1,5 +1,7 @@
 #include "dbobject.h"
 
+#include <QtDebug>
+
 class DBObjectPrivate
 {
 public:
@@ -80,7 +82,12 @@ void DBObject::setIcon(const QIcon &icon)
 
 int DBObject::childCount() const
 {
-    return 0;
+    int count = 0;
+    foreach ( QObject *child, children() )
+        if ( qobject_cast< DBObject* >( child ) )
+            count++;
+
+    return count;
 }
 
 QList<QAction *> DBObject::actions() const

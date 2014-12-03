@@ -70,6 +70,12 @@ DBManagerWindow::DBManagerWindow(QWidget *parent) :
     ui->dbTreeView->setModel( _pd->dbproxy );
 
     initAddMenu();
+
+    connect( ui->actionExpandAll, SIGNAL(triggered() ),
+             ui->dbTreeView, SLOT(expandAll() ) );
+
+    connect( ui->dbTreeView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection) ),
+             this, SLOT(dbTreeSeelctionChanged() ) );
 }
 
 DBManagerWindow::~DBManagerWindow()
@@ -103,8 +109,6 @@ void DBManagerWindow::create(QAction *action)
 {
     if ( !action )
         return;
-
-    qDebug() << action->data().toMap();
 
     DBInterface *dbi = _pd->loader->plugin( action->data().toMap().value( "iid" ).toString() );
     if ( !dbi )
@@ -150,4 +154,13 @@ void DBManagerWindow::on_dbTreeView_customContextMenuRequested(const QPoint &pos
     QMenu *menu = new QMenu( this );
     menu->insertActions( NULL, obj->actions() );
     menu->popup( ui->dbTreeView->viewport()->mapToGlobal( pos ) );
+}
+
+void DBManagerWindow::dbTreeSeelctionChanged()
+{
+    foreach( const QModelIndex &proxy_index, ui->dbTreeView->selectionModel()->selectedRows( 0 ) ){
+        QModelIndex index = _pd->dbproxy->mapToSource( proxy_index );
+        Q_UNUSED( index );
+    }
+
 }

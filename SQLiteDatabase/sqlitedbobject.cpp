@@ -122,6 +122,11 @@ void SQLITEDBObject::connectToDB()
     params.insert( dbmanager::PARENT_PROPERTY, uid() );
     emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES, uid(), params );
 
+    params.clear();
+    params.insert( dbmanager::NAME_PROPERTY, tr( "Views" ) );
+    params.insert( dbmanager::PARENT_PROPERTY, uid() );
+    emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_VIEWS, uid(), params );
+
     /*
 SELECT
   name, type
