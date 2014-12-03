@@ -15,6 +15,8 @@ public:
     virtual ~SQLITEDBObject();
 
     virtual QList< QAction *> actions() const;
+public slots:
+    virtual void exec( quint32 senderuid, const QString &query );
 private slots:
     void connectToDB();
     void remove();

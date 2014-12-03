@@ -26,6 +26,8 @@ signals:
             const QVariantMap &params
             );
     void removeChild( quint32 uid );
+
+    void execQuery( quint32 senderuid, const QString &query );
 public:
     explicit DBObject(QObject *parent = 0);
     DBObject(quint32 uid, quint32 parentuid, QObject *parent = 0);
@@ -45,6 +47,10 @@ public:
 
     virtual int childCount() const;
     virtual QList< QAction *> actions() const;
+public slots:
+    virtual void exec( quint32 senderuid, const QString &query );
+protected:
+    virtual void childEvent(QChildEvent *event);
 };
 
 #endif // DBOBJECT_H

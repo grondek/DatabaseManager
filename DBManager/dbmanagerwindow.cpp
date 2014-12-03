@@ -123,6 +123,13 @@ void DBManagerWindow::create(QAction *action)
                 0,
                 dlg
                 );
+    if ( !widget ) {
+        dlg->deleteLater();
+        return;
+    }
+
+    dlg->setWindowTitle( widget->windowTitle() );
+    dlg->setWindowIcon( widget->windowIcon() );
     dlg->layout()->addWidget( widget );
 
     QDialogButtonBox *bbox = new QDialogButtonBox( dlg );

@@ -1,5 +1,7 @@
 #include "dbobject.h"
 
+#include <QChildEvent>
+
 #include <QtDebug>
 
 class DBObjectPrivate
@@ -93,4 +95,20 @@ int DBObject::childCount() const
 QList<QAction *> DBObject::actions() const
 {
     return QList<QAction *>();
+}
+
+
+void DBObject::childEvent(QChildEvent *event)
+{
+    QObject::childEvent( event );
+    if ( event->added() && qobject_cast< DBObject* >( event->child() ) ) {
+        DBObject *child = qobject_cast< DBObject* >( event->child() );
+        connect( child, SIGNAL(execQuery(quint32,QString) ),
+                 this, SLOT(exec(quint32,QString) )
+                 );
+    }
+}
+
+void DBObject::exec(quint32 senderuid, const QString &query)
+{
 }

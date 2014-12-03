@@ -97,6 +97,10 @@ QList<QAction *> SQLITEDBObject::actions() const
             << _pd->action_separator;
 }
 
+void SQLITEDBObject::exec(quint32 senderuid, const QString &query)
+{
+}
+
 void SQLITEDBObject::connectToDB()
 {
     if ( _pd->dbhandler )
@@ -120,11 +124,21 @@ void SQLITEDBObject::connectToDB()
     QVariantMap params;
     params.insert( dbmanager::NAME_PROPERTY, tr( "Tables" ) );
     params.insert( dbmanager::PARENT_PROPERTY, uid() );
+    params.insert( sqlitedb::SQLITE_QUERY_PROPERTY,
+                   "SELECT name, type" \
+                   " FROM sqlite_master" \
+                   " WHERE type = 'table'" \
+                   " AND name not like 'sqlite?_%' escape '?';" );
     emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES, uid(), params );
 
     params.clear();
     params.insert( dbmanager::NAME_PROPERTY, tr( "Views" ) );
     params.insert( dbmanager::PARENT_PROPERTY, uid() );
+    params.insert( sqlitedb::SQLITE_QUERY_PROPERTY,
+                   "SELECT name, type" \
+                   " FROM sqlite_master" \
+                   " WHERE type = 'view'" \
+                   " AND name not like 'sqlite?_%' escape '?';" );
     emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_VIEWS, uid(), params );
 
     /*

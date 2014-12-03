@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Add SQLite database</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="sqlitedatabase.qrc">
+    <normaloff>:/sqlitedatabase/images/Sqlite-square-icon.svg</normaloff>:/sqlitedatabase/images/Sqlite-square-icon.svg</iconset>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="fieldGrowthPolicy">
@@ -142,6 +146,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="sqlitedatabase.qrc"/>
+ </resources>
  <connections/>
 </ui>
