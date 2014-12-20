@@ -101,6 +101,7 @@ QList<QAction *> DBObject::actions() const
 void DBObject::childEvent(QChildEvent *event)
 {
     QObject::childEvent( event );
+
     if ( event->added() && qobject_cast< DBObject* >( event->child() ) ) {
         DBObject *child = qobject_cast< DBObject* >( event->child() );
         connect( child, SIGNAL(execQuery(quint32,QString) ),

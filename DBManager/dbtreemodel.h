@@ -32,7 +32,9 @@ public:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 public slots:
     void addObject( DBObject *obj );
-
+private slots:
+    void beginAddObjectChild( DBObject *pobj, int oldcount, int newcount );
+    void endAddObjectChild();
 private:
     QModelIndex indexByUid( quint32 uid );
 

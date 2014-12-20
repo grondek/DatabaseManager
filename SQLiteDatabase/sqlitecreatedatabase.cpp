@@ -42,8 +42,8 @@ void SQLITECreateDatabase::create()
                         );
 
     emit createObject(
+                NULL,
                 dbmanager::OBJECT_TYPE_DATABASE,
-                0,
                 params
                 );
 }

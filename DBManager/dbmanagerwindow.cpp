@@ -32,6 +32,10 @@ public:
         loader->connect( loader, SIGNAL(newObject(DBObject*) ),
                          dbmodel, SLOT(addObject(DBObject*) )
                          );
+        loader->connect( loader, SIGNAL(beginAddChildren(DBObject*,int,int) ),
+                         dbmodel, SLOT(beginAddObjectChild(DBObject*,int,int) ) );
+        loader->connect( loader, SIGNAL(endAddChildren() ),
+                         dbmodel, SLOT(endAddObjectChild() ) );
 
         /*QStringList plugins = */loader->availablePlugins();
         loader->loadAll();

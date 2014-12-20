@@ -16,8 +16,8 @@ private:
     Ui::SQLITECreateDatabase *ui;
 signals:
     void createObject(
+            DBObject *parent,
             const QString &type,
-            quint32 parent,
             const QVariantMap &params
             );
 //    void created( DBObject *obj );

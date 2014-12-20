@@ -29,6 +29,9 @@ class DBINTERFACESHARED_EXPORT DBInterface: public QObject
     Q_OBJECT
 signals:
     void newObject( DBObject *obj );
+
+    void beginAddChildren( DBObject *thisobj, int oldcount, int newcount );
+    void endAddChildren();
 public:
     /**
      * @brief Default constructor
@@ -82,7 +85,7 @@ public:
      * @param parent parent object identifier
      * @return
      */
-    virtual DBObject *createObject( const QString &type, quint32 parent, const QVariantMap &parameters ) = 0;
+    virtual DBObject *createObject( DBObject *parent, const QString &type, const QVariantMap &parameters ) = 0;
 
     /**
      * @brief Create object editor for new object

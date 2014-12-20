@@ -21,13 +21,16 @@ private:
 signals:
     void childCountChanged( DBObject *thisobj );
     void addChild(
+            DBObject *parent,
             const QString &type,
-            quint32 parent,
             const QVariantMap &params
             );
     void removeChild( quint32 uid );
 
     void execQuery( quint32 senderuid, const QString &query );
+
+    void chilrenAdded( DBObject *thisobj, int oldcount, int newcount );
+    void childrenRemoved( DBObject *thisobj, int oldcount, int newcount );
 public:
     explicit DBObject(QObject *parent = 0);
     DBObject(quint32 uid, quint32 parentuid, QObject *parent = 0);

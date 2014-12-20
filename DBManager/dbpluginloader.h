@@ -22,6 +22,9 @@ private:
     QHash< QString, QPointer< QPluginLoader > > m_plugins; ///<! Database plugins
 signals:
     void newObject( DBObject *obj );
+
+    void beginAddChildren( DBObject *thisobj, int oldcount, int newcount );
+    void endAddChildren();
 public:
     /**
      * @brief Constructor

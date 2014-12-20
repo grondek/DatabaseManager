@@ -59,6 +59,10 @@ bool DBPluginLoader::loadAll()
 
         connect( loader->instance(), SIGNAL(newObject(DBObject*) ),
                  this, SIGNAL(newObject(DBObject*) ) );
+        connect( loader->instance(), SIGNAL(beginAddChildren(DBObject*,int,int) ),
+                 this, SIGNAL(beginAddChildren(DBObject*,int,int) ) );
+        connect( loader->instance(), SIGNAL(endAddChildren() ),
+                 this, SIGNAL(endAddChildren() ) );
     }
 
     return true;

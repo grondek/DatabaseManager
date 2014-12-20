@@ -219,18 +219,26 @@ QVariant DBTreeModel::data(DBObject *obj, int role) const
 
 void DBTreeModel::addObject(DBObject *obj)
 {
-    QModelIndex pindex = indexByUid( obj->parentObject() );
-
-    int row = rowCount( pindex );
-
-    beginInsertRows( pindex, row, row );
-
-    if ( !pindex.isValid() ) {
+    if ( !obj->parent() ) {
+        int row = _pd->root_objects.count();
+        beginInsertRows( QModelIndex(), row, row );
         _pd->root_objects.append( obj );
-    } else {
-        obj->setParent( pindex.data( DBObjectRole ).value< DBObject* >() );
+        endInsertRows();
     }
 
+    connect( obj, SIGNAL(chilrenAdded(DBObject*,int,int) ),
+             this, SLOT(objectChildrenAdded(DBObject*,int,int) )
+             );
+}
+
+void DBTreeModel::beginAddObjectChild(DBObject *pobj, int oldcount, int newcount)
+{
+    QModelIndex pindex = indexByUid( pobj->uid() );
+    beginInsertRows( pindex, oldcount, newcount - 1 );
+}
+
+void DBTreeModel::endAddObjectChild()
+{
     endInsertRows();
 }
 

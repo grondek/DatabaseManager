@@ -129,7 +129,7 @@ void SQLITEDBObject::connectToDB()
                    " FROM sqlite_master" \
                    " WHERE type = 'table'" \
                    " AND name not like 'sqlite?_%' escape '?';" );
-    emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES, uid(), params );
+    emit addChild( this, sqlitedb::OBJECT_TYPE_SQLITE_GROUP_TABLES, params );
 
     params.clear();
     params.insert( dbmanager::NAME_PROPERTY, tr( "Views" ) );
@@ -139,7 +139,7 @@ void SQLITEDBObject::connectToDB()
                    " FROM sqlite_master" \
                    " WHERE type = 'view'" \
                    " AND name not like 'sqlite?_%' escape '?';" );
-    emit addChild( sqlitedb::OBJECT_TYPE_SQLITE_GROUP_VIEWS, uid(), params );
+    emit addChild( this, sqlitedb::OBJECT_TYPE_SQLITE_GROUP_VIEWS, params );
 
     /*
 SELECT
